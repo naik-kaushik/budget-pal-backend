@@ -189,6 +189,7 @@ app.post("/add-expense", function (req, res) {
     category: cat,
     value: val,
     createdAt: cd,
+    username: req.user.username,
   });
   newExpense.save();
   if (req.isAuthenticated()) {

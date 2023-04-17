@@ -9,12 +9,17 @@ const userDetail = require("./models/userDetails");
 const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
+const cors = require("cors");
 const { json } = require("body-parser");
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 app.use(express.static("public"));
 
 app.use(
@@ -55,7 +60,7 @@ app.post("/signup", function (req, res) {
       if (err) {
         console.log(err);
         res.status(501).json({
-          error : err.message
+          error: err.message,
         });
       } else {
         const newUser = new userDetail({
@@ -107,7 +112,7 @@ app.post("/login", function (req, res) {
     if (err) {
       // console.log(err);
       res.status(401).json({
-        error : err.message
+        error: err.message,
       });
     } else {
       passport.authenticate("local")(req, res, function () {

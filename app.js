@@ -54,7 +54,9 @@ app.post("/signup", function (req, res) {
     function (err, user) {
       if (err) {
         console.log(err);
-        res.status(501).json("Some error occurred!");
+        res.status(501).json({
+          error : err.message
+        });
       } else {
         const newUser = new userDetail({
           firstName: req.body.firstName,
@@ -103,8 +105,10 @@ app.post("/login", function (req, res) {
 
   req.login(user, function (err) {
     if (err) {
-      console.log(err);
-      res.status(401).json("Invalid Credentials");
+      // console.log(err);
+      res.status(401).json({
+        error : err.message
+      });
     } else {
       passport.authenticate("local")(req, res, function () {
         res.status(200).json("Log in successful!");
@@ -168,7 +172,7 @@ app.post("/ideal-budget", function (req, res) {
     userDetail
       .findOneAndUpdate({ username: req.user.username }, { idealBudget: idb })
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         res.status(400).json("Updated idealBudget successfully!");
       })
       .catch((err) => {
@@ -196,7 +200,7 @@ app.post("/add-expense", function (req, res) {
     userDetail.findOne({ username: req.user.username }).then((user) => {
       var ab = user.actualBudget;
       ab[cat] = parseInt(ab[cat]) + parseInt(val);
-      console.log(ab);
+      // console.log(ab);
       userDetail
         .findOneAndUpdate({ username: req.user.username }, { actualBudget: ab })
         .then(res.status(200).json(true));

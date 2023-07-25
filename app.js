@@ -116,7 +116,7 @@ app.post("/login", function (req, res) {
       });
     } else {
       passport.authenticate("local")(req, res, function () {
-        res.status(200).json("Log in successful!");
+        res.status(200).json({message : "OK",user : req.user});
       });
     }
   });

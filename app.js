@@ -46,7 +46,7 @@ mongoose.connect(process.env.MONGO_URI).then(console.log("DB CONNECTED"));
 
 app.get("/", (req, res) => {
   if (req.isAuthenticated()) {
-    res.status(200).json({message : "OK",user : req.user});
+    res.status(200).json({message : "OK",user : req.user,extra : req});
   } else {
     res.status(401).json({message:"NO"});
   }

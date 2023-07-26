@@ -96,7 +96,8 @@ app.post("/signup", function (req, res) {
 
 app.get("/login", function (req, res) {
   if (req.isAuthenticated()) {
-    res.status(200).json("Authorized");
+    res.status(200).json({message : "Authorized",username : req.session.username});
+    
   } else {
     res.status(401).json("Unauthorized");
   }
@@ -116,6 +117,7 @@ app.post("/login", function (req, res) {
       });
     } else {
       passport.authenticate("local")(req, res, function () {
+        req.session.username = user.username;
         res.status(200).json({message : "OK",user : req.user});
       });
     }

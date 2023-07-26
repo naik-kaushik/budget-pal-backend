@@ -96,7 +96,7 @@ app.post("/signup", function (req, res) {
 
 app.get("/login", function (req, res) {
   if (req.isAuthenticated()) {
-    res.status(200).json({message : "Authorized",username : req.session.username});
+    res.status(200).json({message : "Authorized",session : req.session,username : req.session.username});
     
   } else {
     res.status(401).json("Unauthorized");
